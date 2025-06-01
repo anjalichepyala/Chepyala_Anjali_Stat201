@@ -1,0 +1,327 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+G = c(3007, 3067, 3244, 3375,3574, 3828, 4146, 4336, 4696, 5032,5234,5609,6094,6726,7226,7801,8592,9453,10565,11674,12575,13976,14434,15544,17121,18237,19071,20039,21417,22857,23889,24342,25419,26387,27695,28691,29968,31459,32854,34515,36330,37134,37998,39490,41725,44123,46302,48050,48570,47195,48651,50066,51784,53291,55124,56763,57867,59915,62805,65095,63028,69288)
+Y = c(1960:2021)
+G[which(Y == 1990)]
+mean(G)
+median(G)
+sd(G)
+year50000 <- Y[which(G > 50000)]
+year50000[1]
+G_1 <- G[2:length(G)]
+G_2 <- G[1:(length(G)-1)]
+G_3 <- ((G_1 - G_2)/G_2) * 100
+Y2 = c(1961:2021)
+Y2[which(G_3 > 10)]
+Y2[which.max(G_3)]
+for (i in 1:(length(G)-1)) {
+  if (G[i+1] < G[i]) {
+    print (Y2[i])
+  }
+}
+range(G)
+```
+```{r}
+exp_marriage_age <- c('24','30','28','29','30','27','26','28','30+','26','28','30','30','30','probably never','30','25','25','30','28','30+ ','30','25','28','28','25','25','27','28','30','30','35','26','28','27','27','30','25','30','26','32','27','26','27','26','28','37','28','28','28','35','28','27','28','26','28','26','30','27','30','28','25','26','28','35','29','27','27','30','24','25','29','27','33','30','30','25','26','30','32','26','30','30','I wont','25','27','27','25','27','27','32','26','25','never','28','33','28','35','25','30','29','30','31','28','28','30','40','30','28','30','27','by 30','28','27','28','30-35','35','30','30','never','30','35','28','31','30','27','33','32','27','27','26','N/A','25','26','29','28','34','26','24','28','30','120','25','33','27','28','32','30','26','30','30','28','27','27','27','27','27','27','28','30','30','30','28','30','28','30','30','28','28','30','27','30','28','25','never','69','28','28','33','30','28','28','26','30','26','27','30','25','Never','27','27','25')
+
+clean_exp_marriage_age <- as.numeric(exp_marriage_age)
+
+clean_exp_marriage_age <- clean_exp_marriage_age[!is.na(clean_exp_marriage_age)]
+
+clean_exp_marriage_age[clean_exp_marriage_age > 80] <- 80
+
+print(clean_exp_marriage_age)
+
+equal_30_more <- clean_exp_marriage_age[clean_exp_marriage_age >= 30]
+print(equal_30_more)
+print(length(equal_30_more))
+```
+```{r}
+counter <- function(word){
+  return(print(sprintf("The word %s has %s letters", word, (nchar(word)))))
+}
+counter("Anjali")
+```
+
+```{r}
+roll <- function(i) {
+  return(sample(1:6, size=1, replace=TRUE))
+}
+for (i in 1:5) {
+  print(roll(i))
+}
+
+```
+```{r}
+roll_die <- function(size=6, roll_times=1){
+  rolls <- (sample(1:size, roll_times, replace=TRUE))
+  roll_mean <- mean(rolls)
+  return(list(rolls = rolls, mean = roll_mean, size = size, times = roll_times))
+
+}
+result <- roll_die(6, 5)
+print(result$rolls)
+paste("The average of", result$times, "rolls rolling a die with", result$size, "sides is", result$mean)
+```
+```{r}
+s <- "Data Science"
+print(nchar(s))
+print(s[5:length(s)])
+s1 <- sub("Data", "AI", s)
+print(s1)
+```
+```{r}
+character <- "Get a fucking load of yourself"
+count_t <- 0
+for (i in 1:nchar(character)) {
+  if (substr(character, i, i) == "t"){
+    count_t <- count_t + 1
+  }
+}
+print(length(count_t))
+
+character1 <- c("Get a fucking load of yourself")
+count_f <- 0
+for (i in 1:nchar(character1)) {
+  if (substring(character1, i, i) == "f"){
+    count_f <- count_f + 1
+  }
+}
+print(count_f)
+```
+```{r}
+sentence <- "Sally sold sea shells by the sea shore"
+count_sea <- 0
+for (i in 1:nchar(sentence)) {
+  if(substring(sentence, i, i+(nchar("sea")-1)) == "sea"){
+    count_sea <- count_sea + 1
+  }
+}
+print(count_sea)
+```
+```{r}
+var_string <- "54"
+print(var_string)
+typeof(var_string)
+var_num <- as.numeric(var_string)
+print(var_num)
+var_even <- var_num %% 2 == 0
+print(var_even)
+var_pos <- var_num > 0
+print(var_pos)
+object <- (var_even && !var_pos) || (!var_even && var_pos)
+print(object)
+```
+
+```{r}
+var_seconds <- as.numeric("120")
+minutes <- (var_seconds) %/% 60
+seconds <- var_seconds - minutes*60
+print(minutes)
+print(seconds)
+if (minutes == 1){
+  if (seconds == 1){
+    print(sprintf("There is %d minute and %d second in %d seconds", minutes, seconds, var_seconds))
+   } else {
+      print(sprintf("There is %d minute and %d seconds in $d seconds", minutes, seconds, var_seconds))
+    }
+  } else {
+    print(sprintf("There are %d minutes and %d seconds in %d seconds", minutes, seconds, var_seconds))
+  }
+```
+```{r}
+num1 <- 10
+num2 <- 28
+num3 <- 4
+if (num1 > num2) {
+  if (num1 > num3){
+    print(sprintf("%d is the largest number", num1))
+  }else if (num1 < num3){
+    print(sprintf("%d is the largest number", num3))
+  }
+}else if (num2>num3){
+  print(sprintf("%d is the largest number", num2))
+  }else{
+    print(sprintf("%d is the largest number", num3))
+  }
+```
+```{r}
+integerinput <- 4
+factorial <- 1
+for (i in 1:integerinput) {
+  factorial <- factorial * i
+}
+print(factorial)
+```
+```{r}
+var24 <- 24
+listfactors <- c()
+for (i in 1:var24) {
+  if (var24 %% i == 0){
+  listfactors <- append(listfactors, i)
+  }
+}
+print(listfactors)
+```
+```{r}
+var89 <- 89
+is_prime <- TRUE
+for (i in 2:(var89-1)){
+  if (var89%% i == 0){
+    is_prime <- FALSE
+    break
+  }
+}
+if (is_prime) {
+  print(sprintf("%d is a prime number", var89))
+} else {
+  print(sprintf("%d is not a prime number", var89))
+}
+```
+```{r}
+var4000 <- 4000
+lessthan4000 <- TRUE
+for (i in 1:var4000){
+  if (i**2 > var4000){
+    number <- i
+    lessthan4000 <- FALSE
+    break
+  }
+}
+if (!lessthan4000) {
+  print(sprintf("%d squared is %d, and is the first number whose square exceeds %d", number, number**2, var4000))
+}
+```
+```{r}
+bears <- c(20, 17, 10, 28, 13, 30, 13, 17, 16, 26, 12, 28, 17, 27)
+opponent <- c(27, 41, 31, 20, 19, 12, 30, 24, 13, 31, 10, 13, 20, 16)
+bears <- append(bears, 40, 4)
+opponent <- append(opponent, 38, 0)
+print(bears)
+print(opponent)
+spread <- bears - opponent
+print(sprintf("The largest win spread is %d, when the Bears scores %d points and the Opponents scored %d points", max(spread), bears[which.max(spread)], opponent[which.max(spread)]))
+```
+```{r}
+game_score <- cbind(bears, opponent)
+print(game_score)
+new_scores <- matrix(c(37, 9, 17, 17), nrow=2, byrow = FALSE)
+game_score <- rbind(game_score, new_scores)
+print(game_score)
+```
+```{r}
+for (i in (1: nrow(game_score))) {
+  if (game_score[i, "bears"] > game_score[i, "opponent"]){
+    print("Win")
+  } else{
+    print("Loss")
+  }
+}
+
+win <- game_score[, "bears"] > game_score[, "opponent"]
+print(win)
+game_score <- cbind(game_score, win)
+print(game_score)
+```
+
+```{r}
+loss_count <- 0
+for (i in 1:nrow(game_score)){
+  if (game_score[i, "win"] == 1){
+    break
+  }
+  loss_count <- loss_count + 1
+}
+print(sprintf("The bears lost %d games before they won", loss_count))
+```
+```{r}
+
+number_of_factors <- function(integer_input){
+  factors <- c()
+  for (i in 1:integer_input){
+    if (integer_input %% i == 0){
+    factors <- append(factors, i)
+    }
+  }
+return(factors)
+}
+number_of_factors(8) 
+```
+```{r}
+area_function <- function(length = 48, width = 48){
+  area_inches <- length*width
+  area_feet <- (length/12)*(width/12)
+  print(sprintf("The area in square inches is %f and the area in square feet is %f", area_inches, area_feet))
+}
+area_function(102, 60)
+```
+```{r}
+
+letter_reader <- function(fruits){
+  lengths <- c()
+  for (i in 1:length(fruits)){
+    lengths <- append(lengths, nchar(fruits[i]))
+  }
+  print(fruits[which(lengths == max(lengths))])
+}
+
+fruits <- c("apple","orange", "banana", "pear", "grapes", "kiwi")
+letter_reader(fruits)
+```
+```{r}
+value_checker <- function(val, sequence1){
+  if (any(sequence1 == val)){
+    print(sprintf("%d is in the vector", val))
+  }else{
+    print(sprintf("%d is not in the vector", val))
+  }
+}
+value <- 2
+check <- seq(1, 15, 3)
+value_checker(value, check)
+```
+```{r}
+set.seed(123)
+x <- matrix(sample(-50:50, 20), nrow = 5)
+negativeNA <- function(matrix){
+  for (i in 1: nrow(x)){
+    for (j in 1: ncol(x)) {
+      if (x[i, j] < 0){
+        x[i, j] <- NA
+      }
+    }
+  }
+  return(x)
+}
+negativeNA(x)
+```
+```{r}
+set.seed(123)
+x <- matrix(sample(-50:50, 20), nrow = 5)
+evenandodd <- function(matrixs){
+  for (i in 1: nrow(matrixs)){
+    for (j in 1: ncol(matrixs)) {
+      if (matrixs[i,j] %%2 == 0){
+        matrixs[i,j] <- 1
+      }else{
+        matrixs[i,j] <- 0
+      }
+    }
+  }
+  return(matrixs)
+}
+evenandodd(x)
+```
+```{r}
+movies <- read.csv("movies.csv", stringsAsFactors = FALSE)
+
+```
+
